@@ -23,6 +23,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include "dca.h"
+
 #ifdef WORDS_BIGENDIAN
 
 #   define swab32(x) (x)
@@ -48,9 +50,9 @@
 
 #endif
 
-void dca_bitstream_init (dca_state_t * state, uint8_t * buf, int word_mode,
+DCA_API void dca_bitstream_init (dca_state_t * state, uint8_t * buf, int word_mode,
                          int endian_mode);
-uint32_t dca_bitstream_get_bh (dca_state_t * state, uint32_t num_bits);
+DCA_API uint32_t dca_bitstream_get_bh (dca_state_t * state, uint32_t num_bits);
 
 static inline uint32_t bitstream_get (dca_state_t * state, uint32_t num_bits)
 {

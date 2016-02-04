@@ -24,6 +24,20 @@
 #ifndef LIBDCA_DCA_H
 #define LIBDCA_DCA_H
 
+#if defined(_WIN32) || defined(_WIN64) || defined(_WINDOWS)
+#  if defined(DCA_DLL_BUILD)
+#    define DCA_API __declspec(dllexport)
+#  elif defined(_USRDLL)
+#    define DCA_API __declspec(dllimport)
+#  else
+#    define DCA_API 
+#  endif /* DCA_DLL_BUILD */
+#elif defined(__GNUC__) && (__GNUC__ >= 4)
+#  define DCA_API __attribute__((__visibility__("default")))
+#else
+#  define DCA_API
+#endif /* _WIN32 || _WIN64 || _WINDOWS */           
+
 /* x86 accelerations */
 #define MM_ACCEL_X86_MMX	0x80000000
 #define MM_ACCEL_X86_3DNOW	0x40000000
@@ -65,22 +79,22 @@ typedef struct dca_state_s dca_state_t;
 #define DCA_LFE 0x80
 #define DCA_ADJUST_LEVEL 0x100
 
-dca_state_t * dca_init (uint32_t mm_accel);
+DCA_API dca_state_t * dca_init (uint32_t mm_accel);
 
-int dca_syncinfo (dca_state_t *state, uint8_t * buf, int * flags,
+DCA_API int dca_syncinfo (dca_state_t *state, uint8_t * buf, int * flags,
                   int * sample_rate, int * bit_rate, int *frame_length);
 
-int dca_frame (dca_state_t * state, uint8_t * buf, int * flags,
+DCA_API int dca_frame (dca_state_t * state, uint8_t * buf, int * flags,
                level_t * level, sample_t bias);
 
-void dca_dynrng (dca_state_t * state,
+DCA_API void dca_dynrng (dca_state_t * state,
                  level_t (* call) (level_t, void *), void * data);
 
-int dca_blocks_num (dca_state_t * state);
-int dca_block (dca_state_t * state);
+DCA_API int dca_blocks_num (dca_state_t * state);
+DCA_API int dca_block (dca_state_t * state);
 
-sample_t * dca_samples (dca_state_t * state);
+DCA_API sample_t * dca_samples (dca_state_t * state);
 
-void dca_free (dca_state_t * state);
+DCA_API void dca_free (dca_state_t * state);
 
 #endif /* LIBDCA_DCA_H */
