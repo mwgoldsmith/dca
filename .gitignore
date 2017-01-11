@@ -25,6 +25,7 @@ src/extract_dca
 src/extract_dts
 test/compare
 
+/INSTALL
 .vs/
 *.VC.db
 *.opendb
